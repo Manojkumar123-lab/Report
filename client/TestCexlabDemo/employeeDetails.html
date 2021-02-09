@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+    <title>Welcome page</title>
+    <script src="../../lib/addins/inin.addins.lib.js"></script>
+    <meta name="IS_Action_ClientStatus">
+	<meta name="IS_Action_Pickup">
+	<meta name="IS_Action_SetForeground">
+	<meta name="IS_Action_SelectPage">
+	<meta name="IS_Action_RequestBreak">
+	<meta name="IS_Attr_Campaignname">
+	<meta name="IS_System_AgentID">
+	<meta name="IS_Action_Disconnect">
+	<meta name="IS_Action_EndBreak">
+	<meta name="IS_Attr_CallID">
+	<meta name="IS_Action_Trace">
+
+	<script language="javascript">
+
+		function ChangePage(intendedPage) {
+			window.location.href = window.location.href.split("view.html")[0] + intendedPage;
+		}
+
+		function IS_Event_Init() {
+			document.getElementById("campaignName").innerText = IS_Attr_Campaignname.value ? IS_Attr_Campaignname.value : '';
+		}
+		function IS_MobileNumber() {
+			document.getElementById("CallID").innerText = IS_Attr_CallID.value ? IS_Attr_CallID.value : '';
+		}
+
+		function GoBreak()
+		{
+			IS_Action_RequestBreak.click();
+		}
+		
+		function EndBreak()
+		{
+			IS_Action_EndBreak.callback = function(error) {
+				if (!error) {
+					IS_Action_ClientStatus.statuskey = "Available";
+					IS_Action_ClientStatus.click();
+				} else {
+					IS_Action_Trace.level = 0;
+					IS_Action_Trace.message = "Error ending break. " + error;
+					IS_Action_Trace.click();
+				}
+			}
+			IS_Action_EndBreak.click();
+		}
+
+		function IS_Event_BreakGranted()
+		{
+			ChangePage("break.htm");
+		}
+
+		function GoAvailable()
+		{
+		   IS_Action_ClientStatus.statuskey = "Available";
+		   IS_Action_ClientStatus.click();
+		}
+
+		
+
+		
+	</script>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+ <marquee> <h1 style="color:red;" > Hii Scripter it's working </h1></marquee>
+ <div class="row">
+	<div class="col-sm-12 mx-auto d-flex justify-content-center" style="margin-bottom: 10px;">
+			<span>Campaign Name : <span id="campaignName"></span></span>
+	</div>
+	<div class="col-sm-12 mx-auto d-flex justify-content-center" style="margin-bottom: 10px;">
+			<span>MobileNumber : <span id="CallID"></span></span>
+	</div>
+</div>
+<ul style="list-style-type:disc">
+    <li>Tulasi</li>
+     <li>yashaswi</li>
+     <li>sindhu</li>
+     <li>manoj</li>
+      <li>akhil</li>
+</ul>
+<br>
+
+			
+		<div class="row" style="margin-top:20px;">
+	       <div class="col-sm-12 mx-auto d-flex justify-content-center" >
+					<button type="button" class="btn btn-outline-dark" style="height:40px;" onclick="GoBreak()" id="endbreakbutton">Take Break</button>
+				</div>
+			</div>
+		
+ 
+
+</body>
+</html>
